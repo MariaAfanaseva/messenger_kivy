@@ -144,10 +144,8 @@ class ChatScreen(Screen):
         self.messages_layout.add_widget(self.messages[-1])
 
     def get_message(self, *args):
-        print('signal get message')
         sender = args[0]
         if sender == self.contact:
-            print('show_history')
             self.show_history()
         else:
             if self.database.is_contact(sender):
@@ -177,8 +175,8 @@ class ChatScreen(Screen):
         self.load_chat(sender)
 
     def connect_chat_signal(self, client_obj):
-        print('signal')
-        client_obj.new_message_signal_chat.connect(self.get_message)
+        if self.screen_manager.current == 'chat':
+            client_obj.new_message_signal_chat.connect(self.get_message)
 
     def show_login_screen(self, sender):
         self.screen_manager.current = 'login'
