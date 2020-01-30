@@ -6,19 +6,13 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.screenmanager import Screen
-from kivy.graphics import Color, Rectangle
+from kivy.graphics import Color
 from kivy.uix.popup import Popup
 from functools import partial
+from gui_kivy.color_label import CLabel
 
 
 class ChatScreen(Screen):
-    class CLabel(Label):
-        def on_size(self, *args):
-            self.canvas.before.clear()
-            with self.canvas.before:
-                Color(1, 0, 0, 0.5)
-                Rectangle(pos=self.pos, size=self.size)
-
     def __init__(self, screen_manager, **kwargs):
         super(ChatScreen, self).__init__(**kwargs)
 
@@ -34,9 +28,9 @@ class ChatScreen(Screen):
         self.scroll_view = ScrollView(size_hint=(1, 0.8), size=(100, 100))
         self.footer_layout = GridLayout(cols=2, size_hint=(1, 0.1))
 
-        self.contact_list_button = Button(text='=', size_hint=(0.1, 1))
+        self.contact_list_button = Button(text='<=', size_hint=(0.1, 1))
         self.contact_list_button.on_press = self.go_to_contact_list
-        self.label = ChatScreen.CLabel(text="Chat with bla bla", size_hint=(0.9, 1))
+        self.label = CLabel(text="Chat with bla bla", size_hint=(0.9, 1))
 
         self.messages = []
         self.messages_layout = GridLayout(cols=1, padding=(30, 0, 30, 0),

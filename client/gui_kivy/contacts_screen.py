@@ -1,21 +1,13 @@
 from functools import partial
 from kivy.uix.gridlayout import GridLayout
-from kivy.uix.button import Button
 from kivy.uix.scrollview import ScrollView
-from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
-from kivy.graphics import Color, Rectangle
-from kivy.uix.label import Label
+from kivy.uix.dropdown import DropDown
+from kivy.uix.button import Button
+from gui_kivy.color_label import CLabel
 
 
 class ContactScreen(Screen):
-    class CLabel(Label):
-        def on_size(self, *args):
-            self.canvas.before.clear()
-            with self.canvas.before:
-                Color(1, 0, 0, 0.5)
-                Rectangle(pos=self.pos, size=self.size)
-
     def __init__(self, screen_manager, **kwargs):
         super(ContactScreen, self).__init__(**kwargs)
 
@@ -25,14 +17,34 @@ class ContactScreen(Screen):
         self.database = None
         self.client_transport = None
 
+        self.main_layout = GridLayout(cols=1)
+        self.header_layout = GridLayout(cols=2, size_hint=(1, 0.1))
+        self.scroll_view = ScrollView(size_hint=(1, 0.8), size=(100, 100))
+
+        #  Create menu
+        self.menu_button = DropDown()
+        for name in ['Add contact', 'Delete contact']:
+            btn = Button(text=f'{name}', size_hint_y=None, height=30)
+            btn.bind(on_release=lambda btn: self.menu_button.select(btn.text))
+            self.menu_button.add_widget(btn)
+        self.main_button = Button(text='Menu', size_hint=(.2, .5))
+        self.main_button.bind(on_release=self.menu_button.open)
+
+        self.menu_button.bind(on_select=lambda instance, x: self.show_screen(x))
+
+        self.label = CLabel(size_hint=(0.9, 1))
+
         self.contacts_layout = GridLayout(cols=1, size_hint_y=None, row_force_default=True, row_default_height=40)
         self.contacts_layout.bind(minimum_height=self.contacts_layout.setter('height'))
 
-        self.scroll_view = ScrollView(size_hint=(1, None), size=(Window.width, Window.height))
+        self.header_layout.add_widget(self.main_button)
+        self.header_layout.add_widget(self.label)
         self.scroll_view.add_widget(self.contacts_layout)
 
-        self.add_widget(self.scroll_view)
-        #  befor show
+        self.main_layout.add_widget(self.header_layout)
+        self.main_layout.add_widget(self.scroll_view)
+        self.add_widget(self.main_layout)
+        #  Before show
         self.on_pre_enter = self.update_contact_list
 
     def update_contact_list(self, new_message=None):
@@ -69,6 +81,8 @@ class ContactScreen(Screen):
     def set_objects(self, database, client_transport):
         self.database = database
         self.client_transport = client_transport
+        self.label.text = f'Hello {self.client_transport.client_login}! ' \
+                          f'Here is your contact list.'
 
     def get_contact_list(self):
         contacts_list = self.database.get_contacts()
@@ -80,3 +94,7 @@ class ContactScreen(Screen):
 
     def connect_contacts_signal(self, client_obj):
         client_obj.new_message_signal_contacts.connect(self.show_label)
+
+    def show_screen(self, name):
+        if name == 'Add contact':
+            self.screen_manager.current = 'add_contact'

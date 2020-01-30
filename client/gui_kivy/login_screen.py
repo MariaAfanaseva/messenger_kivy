@@ -39,3 +39,4 @@ class LoginScreen(Screen):
             self.screen_manager.current = 'loading'
             self.screen_manager.get_screen('contacts').set_objects(database, client_transport)
             self.screen_manager.get_screen('chat').set_objects(database, client_transport)
+            self.screen_manager.get_screen('add_contact').set_objects(database, client_transport)
