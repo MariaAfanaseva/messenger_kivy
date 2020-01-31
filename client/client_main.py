@@ -585,6 +585,11 @@ class ClientTransport:
             ACCOUNT_NAME: client_login
         }
 
+    @Logging()
+    def stop_app(self):
+        self.exit_client()
+        self.connection.close()
+
 
 @Logging()
 def start_client(client_login, client_password, screen_manager):
@@ -611,6 +616,3 @@ def start_client(client_login, client_password, screen_manager):
     screen_manager.get_screen('chat').connect_chat_signal(loading_client)
     screen_manager.get_screen('contacts').connect_contacts_signal(loading_client)
     return database, client_transport
-
-# client_transport.exit_client()
-# connection.close()

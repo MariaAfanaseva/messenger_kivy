@@ -20,6 +20,10 @@ class MessengerApp(App):
     def build(self):
         return sm
 
+    def on_stop(self):
+        if sm.current != 'login':
+            sm.get_screen('login').client_transport.stop_app()
+
 
 if __name__ == '__main__':
     MessengerApp().run()

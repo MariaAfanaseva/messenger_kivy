@@ -11,6 +11,8 @@ class LoginScreen(Screen):
         super(LoginScreen, self).__init__(**kwargs)
 
         self.screen_manager = screen_manager
+        self.client_transport = None
+        self.database = None
 
         self.main_layout = GridLayout(cols=1, padding=(50, 0, 50, 0), spacing=(10, 10))
 
@@ -34,9 +36,9 @@ class LoginScreen(Screen):
 
     def go_to_loading(self):
         if self.login_input.text and self.password_input.text:
-            database, client_transport = start_client(self.login_input.text, self.password_input.text,
-                                                      self.screen_manager)
+            self.database, self.client_transport = start_client(self.login_input.text, self.password_input.text,
+                                                           self.screen_manager)
             self.screen_manager.current = 'loading'
-            self.screen_manager.get_screen('contacts').set_objects(database, client_transport)
-            self.screen_manager.get_screen('chat').set_objects(database, client_transport)
-            self.screen_manager.get_screen('add_contact').set_objects(database, client_transport)
+            self.screen_manager.get_screen('contacts').set_objects(self.database, self.client_transport)
+            self.screen_manager.get_screen('chat').set_objects(self.database, self.client_transport)
+            self.screen_manager.get_screen('add_contact').set_objects(self.database, self.client_transport)
