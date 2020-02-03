@@ -107,12 +107,19 @@ class ContactScreen(Screen):
         return contacts_list
 
     def show_label(self, *args):
-        sender = args[0]
-        if sender in self.new_messages:
-            self.new_messages[sender] += 1
-        else:
-            self.new_messages[sender] = 1
-        self.update_contact_list(new_message=sender)
+        if self.screen_manager.current == 'contacts':
+            sender = args[0]
+            if not self.database.is_contact(sender):
+                text_title = f'New message from {sender}'
+                text_label = f'Received a new message from {sender}, ' \
+                    f'add contact {sender} and open chat with him?'
+                self.create_message_window(text_title, text_label, self.new_contact, sender)
+            else:
+                if sender in self.new_messages:
+                    self.new_messages[sender] += 1
+                else:
+                    self.new_messages[sender] = 1
+                self.update_contact_list(new_message=sender)
 
     def connect_contacts_signal(self, client_obj):
         client_obj.new_message_signal_contacts.connect(self.show_label)
@@ -136,8 +143,19 @@ class ContactScreen(Screen):
                 text_label = 'Lost server connection.'
                 self.create_message_window(text_title, text_label, self.go_to_login)
 
+    def new_contact(self, user):
+        if self.client_transport.add_contact(user):
+            self.update_contact_list()
+            text_title = 'Success!'
+            text_label = 'Contact successfully added.'
+            self.create_message_window(text_title, text_label, self.go_to_chat, user)
+        else:
+            text_title = 'Error!'
+            text_label = 'Lost server connection.'
+            self.create_message_window(text_title, text_label, self.go_to_login)
+
     @staticmethod
-    def create_message_window(text_title, text_label, ok_func=None):
+    def create_message_window(text_title, text_label, ok_func=None, sender=None):
         box = GridLayout(cols=1)
         label = Label(text=text_label,
                       size_hint=(1, 0.7))
@@ -147,7 +165,9 @@ class ContactScreen(Screen):
         popup = Popup(title=text_title,
                       content=box,
                       size_hint=(0.6, 0.6))
-        if ok_func:
+        if ok_func and sender:
+            ok_button.on_press = partial(ok_func, sender)
+        elif ok_func and not sender:
             ok_button.on_press = ok_func
         ok_button.bind(on_press=popup.dismiss)
         popup.open()

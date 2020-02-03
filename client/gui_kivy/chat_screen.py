@@ -144,22 +144,22 @@ class ChatScreen(Screen):
         self.messages_layout.add_widget(self.messages[-1])
 
     def get_message(self, *args):
-        sender = args[0]
-        if sender == self.contact:
-            self.show_history()
-        else:
-            if self.database.is_contact(sender):
-                text_title = f'New message from {sender}'
-                text_label = f'Received a new message from {sender}, open chat with him?'
-                self.create_message_window(sender, text_title, text_label, self.open_new_chat)
-
+        if self.screen_manager.current == 'chat':
+            sender = args[0]
+            if sender == self.contact:
+                self.show_history()
             else:
-                text_title = f'New message from {sender}'
-                text_label = f'Received a new message from {sender}.\n ' \
-                             f'This user is not in your contact list.\n ' \
-                             f'Add to contacts and open a chat with him?'
+                if self.database.is_contact(sender):
+                    text_title = f'New message from {sender}'
+                    text_label = f'Received a new message from {sender}, open chat with him?'
+                    self.create_message_window(sender, text_title, text_label, self.open_new_chat)
+                else:
+                    text_title = f'New message from {sender}'
+                    text_label = f'Received a new message from {sender}.\n ' \
+                                 f'This user is not in your contact list.\n ' \
+                                 f'Add to contacts and open a chat with him?'
 
-                self.create_message_window(sender, text_title, text_label, self.add_contact)
+                    self.create_message_window(sender, text_title, text_label, self.add_contact)
 
     def add_contact(self, sender):
         if self.client_transport.add_contact(sender):
@@ -175,8 +175,7 @@ class ChatScreen(Screen):
         self.load_chat(sender)
 
     def connect_chat_signal(self, client_obj):
-        if self.screen_manager.current == 'chat':
-            client_obj.new_message_signal_chat.connect(self.get_message)
+        client_obj.new_message_signal_chat.connect(self.get_message)
 
     def show_login_screen(self, sender):
         self.screen_manager.current = 'login'

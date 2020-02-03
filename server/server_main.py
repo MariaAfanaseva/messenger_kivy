@@ -87,11 +87,10 @@ class Server(threading.Thread, QObject):
     new_connected_client = pyqtSignal()
     disconnected_client = pyqtSignal()
 
-    def __init__(self, listen_ip, listen_port, database, mongo_db):
+    def __init__(self, listen_ip, listen_port, database):
         self.listen_ip = listen_ip
         self.listen_port = listen_port
         self.database = database
-        self.mongo_db = mongo_db
 
         self.connection = None
 
@@ -139,7 +138,7 @@ class Server(threading.Thread, QObject):
                     print(f'User with login {user [0]}, last login: {user[2]}')
             elif command == 'connected':
                 for user in sorted(self.database.users_active_list()):
-                    print(f'The user with the login {user [0]} is connected ip - {user[1]} port - {user[2]}, '
+                    print(f'The user with the login {user[0]} is connected ip - {user[1]} port - {user[2]}, '
                           f'connection setup time: {user[3]}')
             elif command == 'history':
                 login = input(
@@ -314,7 +313,6 @@ class Server(threading.Thread, QObject):
         else:
             with LOCK_DATABASE:
                 self.database.add_user(login_user, password_hash_str, fullname)
-                self.mongo_db.add_user(login_user, password_hash_str, fullname)
             self.update_users_list_message()
             return True
 
@@ -539,9 +537,9 @@ def main():
     database = ServerDB(db_path)
 
     # Create Mongo database
-    mongo_db = MongoDbServer()
+    # database = MongoDbServer()
 
-    server = Server(listen_ip, listen_port, database, mongo_db)
+    server = Server(listen_ip, listen_port, database)
     server.daemon = True
     server.start()
 
