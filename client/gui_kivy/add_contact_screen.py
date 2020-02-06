@@ -3,9 +3,8 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen
-from kivy.uix.popup import Popup
-from kivy.uix.label import Label
 from gui_kivy.color_label import CLabel
+from gui_kivy.message_window import create_message_window
 
 
 class AddContactScreen(Screen):
@@ -75,25 +74,8 @@ class AddContactScreen(Screen):
         if self.client_transport.add_contact(user):
             text_title = 'Success!'
             text_label = 'Contact successfully added.'
-            self.create_message_window(text_title, text_label, self.go_to_contact_list)
+            create_message_window(text_title, text_label, self.go_to_contact_list)
         else:
             text_title = 'Error!'
             text_label = 'Lost server connection.'
-            self.create_message_window(text_title, text_label, self.go_to_login)
-
-    @staticmethod
-    def create_message_window(text_title, text_label, ok_func):
-        box = GridLayout(cols=1)
-        label = Label(text=text_label,
-                      size_hint=(1, 0.7))
-        ok_button = Button(text='OK', size_hint=(0.5, 0.2))
-        box.add_widget(label)
-        box.add_widget(ok_button)
-        popup = Popup(title=text_title,
-                      content=box,
-                      size_hint=(0.6, 0.6))
-        ok_button.on_press = ok_func
-        ok_button.bind(on_press=popup.dismiss)
-        popup.open()
-
-
+            create_message_window(text_title, text_label, self.go_to_login)

@@ -4,9 +4,9 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.screenmanager import Screen
 from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button
-from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from gui_kivy.color_label import CLabel
+from gui_kivy.message_window import create_message_window
 
 
 class ContactScreen(Screen):
@@ -58,20 +58,9 @@ class ContactScreen(Screen):
         contact_list = self.get_contact_list()
 
         for contact in contact_list:
-            contact_grid = GridLayout(cols=3, size_hint=(1, 0.1))
-
-            contact_menu = DropDown()
-            for name in ['Delete']:
-                btn = Button(text=f'{name}', size_hint_y=None, height=30)
-                btn.bind(on_release=lambda btn: contact_menu.select(btn.text))
-                contact_menu.add_widget(btn)
-            main_button = Button(text=':', size_hint=(.1, .3))
-            main_button.bind(on_release=contact_menu.open)
-
-            contact_menu.bind(on_select=lambda instance, x: self.delete_contact(x, contact))
+            contact_grid = GridLayout(cols=2, size_hint=(1, 0.1))
 
             button = Button(text=contact, id=contact, size_hint_y=None, height=40)
-            contact_grid.add_widget(main_button)
             contact_grid.add_widget(button)
 
             if contact in self.new_messages:
@@ -84,13 +73,11 @@ class ContactScreen(Screen):
             button.on_press = partial(self.go_to_chat, contact)
 
     def go_to_chat(self, contact_name):
-        if self.client_transport.is_received_pubkey(contact_name):
-            self.screen_manager.current = 'chat'
-            chat = self.screen_manager.get_screen('chat')
-            chat.load_chat(contact_name)
+        self.screen_manager.current = 'chat'
+        chat = self.screen_manager.get_screen('chat')
+        chat.load_chat(contact_name)
+        if contact_name in self.new_messages:
             self.new_messages[contact_name] = 0
-        else:
-            self.show_info_screen('User is not online.', 'contacts')
 
     def show_info_screen(self, *args):
         self.screen_manager.current = 'info'
@@ -113,7 +100,7 @@ class ContactScreen(Screen):
                 text_title = f'New message from {sender}'
                 text_label = f'Received a new message from {sender}, ' \
                     f'add contact {sender} and open chat with him?'
-                self.create_message_window(text_title, text_label, self.new_contact, sender)
+                create_message_window(text_title, text_label, self.new_contact, sender)
             else:
                 if sender in self.new_messages:
                     self.new_messages[sender] += 1
@@ -131,46 +118,13 @@ class ContactScreen(Screen):
     def go_to_login(self):
         self.screen_manager.current = 'login'
 
-    def delete_contact(self, name, user):
-        if name == 'Delete':
-            if self.client_transport.del_contact(user):
-                text_title = 'Success!'
-                text_label = 'Contact successfully removed.'
-                self.create_message_window(text_title, text_label)
-                self.update_contact_list()
-            else:
-                text_title = 'Error!'
-                text_label = 'Lost server connection.'
-                self.create_message_window(text_title, text_label, self.go_to_login)
-
     def new_contact(self, user):
         if self.client_transport.add_contact(user):
             self.update_contact_list()
             text_title = 'Success!'
             text_label = 'Contact successfully added.'
-            self.create_message_window(text_title, text_label, self.go_to_chat, user)
+            create_message_window(text_title, text_label, self.go_to_chat, user)
         else:
             text_title = 'Error!'
             text_label = 'Lost server connection.'
-            self.create_message_window(text_title, text_label, self.go_to_login)
-
-    @staticmethod
-    def create_message_window(text_title, text_label, ok_func=None, sender=None):
-        box = GridLayout(cols=1)
-        label = Label(text=text_label,
-                      size_hint=(1, 0.7))
-        ok_button = Button(text='OK', size_hint=(0.5, 0.2))
-        box.add_widget(label)
-        box.add_widget(ok_button)
-        popup = Popup(title=text_title,
-                      content=box,
-                      size_hint=(0.6, 0.6))
-        if ok_func and sender:
-            ok_button.on_press = partial(ok_func, sender)
-        elif ok_func and not sender:
-            ok_button.on_press = ok_func
-        ok_button.bind(on_press=popup.dismiss)
-        popup.open()
-
-
-
+            create_message_window(text_title, text_label, self.go_to_login)
