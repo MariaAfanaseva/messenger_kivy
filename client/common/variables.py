@@ -77,5 +77,9 @@ RESPONSE_206 = {
 }
 
 
-def get_path(name):
+def get_path_avatar(name):
     return f'img/avatar_{name}.jpg'
+
+
+def get_path_diagram(name):
+    return f'img/diagrams/{name}'

@@ -26,7 +26,7 @@ class ContactScreen(Screen):
 
         #  Create menu
         self.menu_button = DropDown()
-        for name in ['Add contact']:
+        for name in ['Add contact', 'Statistic']:
             btn = Button(text=f'{name}', size_hint_y=None, height=30)
             btn.bind(on_release=lambda btn: self.menu_button.select(btn.text))
             self.menu_button.add_widget(btn)
@@ -114,6 +114,9 @@ class ContactScreen(Screen):
     def show_screen(self, name):
         if name == 'Add contact':
             self.screen_manager.current = 'add_contact'
+        elif name == 'Statistic':
+            self.screen_manager.current = 'statistic'
+            self.screen_manager.get_screen('statistic').get_database(self.database)
 
     def go_to_login(self):
         self.screen_manager.current = 'login'

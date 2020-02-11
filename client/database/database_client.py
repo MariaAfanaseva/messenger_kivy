@@ -5,6 +5,7 @@ from sqlalchemy import (create_engine, Column, String, Integer,
                         DateTime, Text, asc, ForeignKey)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import func
 
 Base = declarative_base()
 
@@ -237,3 +238,10 @@ class ClientDB:
         new_message = self.GroupsMessages(group_id, from_user, message, date=datetime.datetime.now())
         self.session.add(new_message)
         self.session.commit()
+
+    def get_col_messages(self):
+        query = self.session.query(func.count(self.HistoryMessages.message),
+                                   self.HistoryMessages.direction, self.HistoryMessages.contact).\
+            group_by(self.HistoryMessages.contact, self.HistoryMessages.direction).\
+            all()
+        return query

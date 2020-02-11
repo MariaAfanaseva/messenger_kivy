@@ -7,6 +7,9 @@ from gui_kivy.loading_screen import LoadingScreen
 from gui_kivy.info_screen import InfoScreen
 from gui_kivy.add_contact_screen import AddContactScreen
 from gui_kivy.contact_info import ContactInfoScreen
+from gui_kivy.statistic_screen import StatisticScreen
+from gui_kivy.diagram_screen import DiagramScreen
+
 
 sm = ScreenManager()
 sm.add_widget(LoginScreen(sm, name='login'))
@@ -16,6 +19,8 @@ sm.add_widget(ChatScreen(sm, name='chat'))
 sm.add_widget(InfoScreen(sm, name='info'))
 sm.add_widget(AddContactScreen(sm, name='add_contact'))
 sm.add_widget(ContactInfoScreen(sm, name='contact_info'))
+sm.add_widget(StatisticScreen(sm, name='statistic'))
+sm.add_widget(DiagramScreen(sm, name='diagram'))
 
 
 class MessengerApp(App):

@@ -17,7 +17,7 @@ from common.variables import (DEFAULT_IP_ADDRESS, DEFAULT_PORT, TO, USER, ACCOUN
                               EXIT, GET_CONTACTS, PUBLIC_KEY, ACTION, MESSAGE_TEXT, MESSAGE,
                               LIST_INFO, ADD_CONTACT, DELETE_CONTACT, USERS_REQUEST,
                               PUBLIC_KEY_REQUEST, SEND_AVATAR, IMAGE, GET_AVATAR,
-                              GET_GROUPS, get_path, GET_MESSAGES_GROUPS, MESSAGE_GROUP)
+                              GET_GROUPS, get_path_avatar, GET_MESSAGES_GROUPS, MESSAGE_GROUP)
 from common.errors import (IncorrectDataNotDictError, FieldMissingError,
                            IncorrectCodeError, ServerError)
 from common.decos import Logging
@@ -423,7 +423,7 @@ class ClientTransport:
             LOGGER.debug(f'Loaded avatar for {login}')
             img = answer[DATA]
             img_data = base64.b64decode(img)
-            filename = get_path(login)
+            filename = get_path_avatar(login)
             with open(filename, 'wb') as f:
                 f.write(img_data)
             return True
@@ -549,7 +549,7 @@ class ClientTransport:
 
     # @Logging()
     def send_avatar_to_server(self):
-        with open(get_path(self.client_login), 'rb') as image_file:
+        with open(get_path_avatar(self.client_login), 'rb') as image_file:
             encoded_img = base64.b64encode(image_file.read()).decode('utf8')
 
         message = {
@@ -611,6 +611,7 @@ def start_client(client_login, client_password, screen_manager):
                             encrypt_decrypt)
     loading_client.daemon = True
     loading_client.start()
+
     #  Signals Kivy
     screen_manager.get_screen('loading').connect_loading_signal(loading_client)
     screen_manager.get_screen('chat').connect_chat_signal(loading_client)
