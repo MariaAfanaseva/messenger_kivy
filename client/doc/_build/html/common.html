@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Common package &#8212; Mega Messenger beta 0.8 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Logs package" href="logs.html" />
+    <link rel="prev" title="Welcome to Mega Messenger’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="common-package">
+<h1>Common package<a class="headerlink" href="#common-package" title="Permalink to this headline">¶</a></h1>
+<p>A package of common utilities that use in different modules of the project.</p>
+<div class="section" id="module-common.decos.Logging">
+<span id="script-decos-py"></span><h2>Script decos.py<a class="headerlink" href="#module-common.decos.Logging" title="Permalink to this headline">¶</a></h2>
+<p>The decorator writes information about the launched function to the log.</p>
+</div>
+<div class="section" id="script-descriptors-py">
+<h2>Script descriptors.py<a class="headerlink" href="#script-descriptors-py" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="common.descriptors.CheckPort">
+<em class="property">class </em><code class="sig-prename descclassname">common.descriptors.</code><code class="sig-name descname">CheckPort</code><a class="headerlink" href="#common.descriptors.CheckPort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Port validation descriptor.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="common.descriptors.CheckIP">
+<em class="property">class </em><code class="sig-prename descclassname">common.descriptors.</code><code class="sig-name descname">CheckIP</code><a class="headerlink" href="#common.descriptors.CheckIP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Address validation descriptor.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="common.descriptors.CheckName">
+<em class="property">class </em><code class="sig-prename descclassname">common.descriptors.</code><code class="sig-name descname">CheckName</code><a class="headerlink" href="#common.descriptors.CheckName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Username validation descriptor.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="script-errors-py">
+<h2>Script errors.py<a class="headerlink" href="#script-errors-py" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="common.errors.ServerError">
+<em class="property">class </em><code class="sig-prename descclassname">common.errors.</code><code class="sig-name descname">ServerError</code><span class="sig-paren">(</span><em class="sig-param">text</em><span class="sig-paren">)</span><a class="headerlink" href="#common.errors.ServerError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create error server with text</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="common.errors.IncorrectDataNotDictError">
+<em class="property">class </em><code class="sig-prename descclassname">common.errors.</code><code class="sig-name descname">IncorrectDataNotDictError</code><a class="headerlink" href="#common.errors.IncorrectDataNotDictError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create error wen data not dict</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="common.errors.IncorrectCodeError">
+<em class="property">class </em><code class="sig-prename descclassname">common.errors.</code><code class="sig-name descname">IncorrectCodeError</code><span class="sig-paren">(</span><em class="sig-param">wrong_code</em><span class="sig-paren">)</span><a class="headerlink" href="#common.errors.IncorrectCodeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create error wen invalid code in message</p>
+</dd></dl>
+
+</div>
+<div class="section" id="script-metaclasses-py">
+<h2>Script metaclasses.py<a class="headerlink" href="#script-metaclasses-py" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="common.metaclasses.ServerCreator">
+<em class="property">class </em><code class="sig-prename descclassname">common.metaclasses.</code><code class="sig-name descname">ServerCreator</code><span class="sig-paren">(</span><em class="sig-param">name_class</em>, <em class="sig-param">bases_classes</em>, <em class="sig-param">dict_class</em><span class="sig-paren">)</span><a class="headerlink" href="#common.metaclasses.ServerCreator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="common.metaclasses.ClientCreator">
+<em class="property">class </em><code class="sig-prename descclassname">common.metaclasses.</code><code class="sig-name descname">ClientCreator</code><span class="sig-paren">(</span><em class="sig-param">name_class</em>, <em class="sig-param">bases_classes</em>, <em class="sig-param">dict_class</em><span class="sig-paren">)</span><a class="headerlink" href="#common.metaclasses.ClientCreator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="script-utils-py">
+<h2>Script utils.py<a class="headerlink" href="#script-utils-py" title="Permalink to this headline">¶</a></h2>
+<p>common.utils. <strong>get_msg</strong> (client)</p>
+<blockquote>
+<div><p>The function of receiving messages from remote computers. Accepts JSON messages, decode the received message and verifies that the dictionary is received.</p>
+</div></blockquote>
+<p>common.utils. <strong>send_msg</strong> (sock, message)</p>
+<blockquote>
+<div><p>The function of sending dictionaries via a socket.
+Encodes a dictionary in JSON format and sends through a socket.</p>
+</div></blockquote>
+</div>
+<div class="section" id="script-variables-py">
+<h2>Script variables.py<a class="headerlink" href="#script-variables-py" title="Permalink to this headline">¶</a></h2>
+<p>Contains various global project variables.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Mega Messenger</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Common package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-common.decos.Logging">Script decos.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#script-descriptors-py">Script descriptors.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#script-errors-py">Script errors.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#script-metaclasses-py">Script metaclasses.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#script-utils-py">Script utils.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#script-variables-py">Script variables.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="logs.html">Logs package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Mega Messenger’s documentation!</a></li>
+      <li>Next: <a href="logs.html" title="next chapter">Logs package</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Maria Afanaseva.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/common.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Client module documentation &#8212; Mega Messenger beta 0.8 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Common package" href="common.html" />
+    <link rel="prev" title="Welcome to Mega Messenger’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="client-module-documentation">
+<h1>Client module documentation<a class="headerlink" href="#client-module-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Client messaging application. Supports
+messages are online, messages are encrypted
+using the RSA algorithm with a long key of 2048 bits.</p>
+<p>Supports command line arguments:</p>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">client_main.py</span> <span class="pre">-ip</span> <span class="pre">{ip</span> <span class="pre">server}</span> <span class="pre">-port</span> <span class="pre">{port}</span> <span class="pre">-n</span> <span class="pre">or</span> <span class="pre">--name</span> <span class="pre">{user</span> <span class="pre">login}</span> <span class="pre">-p</span> <span class="pre">или</span> <span class="pre">-password</span> <span class="pre">{password}</span></code></p>
+<ol class="arabic simple">
+<li><p>{ip server} <code class="docutils literal notranslate"><span class="pre">-ip</span></code> - message server address</p></li>
+<li><p>{port} <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">port</span></code>  - on which connections are accepted.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> or <code class="docutils literal notranslate"><span class="pre">--name</span></code> - username with which to log in.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-p</span></code> or <code class="docutils literal notranslate"><span class="pre">--password</span></code> - user password.</p></li>
+</ol>
+<p>Все опции командной строки являются необязательными, но имя пользователя и пароль необходимо использовать в паре.</p>
+<p>Examples of using:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">client_main.py</span></code></p></li>
+</ul>
+<p><em>Running the application with default settings.</em></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">client_main.py</span> <span class="pre">127.0.0.1</span> <span class="pre">7777</span></code></p></li>
+</ul>
+<p><em>Launching the application with instructions to connect to the server at ip_address:port</em></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">client_main.py</span> <span class="pre">-n</span> <span class="pre">test1</span> <span class="pre">-p</span> <span class="pre">123</span></code></p></li>
+<li><p>Launching the application with user test1 and password 123. *</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">client_main.py</span> <span class="pre">ip_address</span> <span class="pre">some_port</span> <span class="pre">-n</span> <span class="pre">test1</span> <span class="pre">-p</span> <span class="pre">123</span></code></p></li>
+<li><p>Launching the application with the user test1 and password 123 and instructing to connect to the server at ip_address: port. *</p></li>
+</ul>
+<div class="section" id="client-main-py">
+<h2>client_main.py<a class="headerlink" href="#client-main-py" title="Permalink to this headline">¶</a></h2>
+<p>Launched module, contains parser of command line arguments and application initialization functionality.</p>
+<p>client. <strong>get_args</strong> ()</p>
+<blockquote>
+<div><p>Parser of command line arguments, returns a tuple of 4 elements:</p>
+<ul class="simple">
+<li><p>server address</p></li>
+<li><p>port</p></li>
+<li><p>Username</p></li>
+<li><p>password</p></li>
+</ul>
+</div></blockquote>
+<dl class="class">
+<dt id="client_main.Client">
+<em class="property">class </em><code class="sig-prename descclassname">client_main.</code><code class="sig-name descname">Client</code><span class="sig-paren">(</span><em class="sig-param">connection</em>, <em class="sig-param">server_ip</em>, <em class="sig-param">server_port</em>, <em class="sig-param">client_login</em>, <em class="sig-param">client_password</em>, <em class="sig-param">database</em>, <em class="sig-param">encrypt_decrypt</em>, <em class="sig-param">client_transport</em><span class="sig-paren">)</span><a class="headerlink" href="#client_main.Client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs initial client connection to the server, updating the database</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="client_main.ClientTransport">
+<em class="property">class </em><code class="sig-prename descclassname">client_main.</code><code class="sig-name descname">ClientTransport</code><span class="sig-paren">(</span><em class="sig-param">connection</em>, <em class="sig-param">client_login</em>, <em class="sig-param">database</em>, <em class="sig-param">encrypt_decrypt</em><span class="sig-paren">)</span><a class="headerlink" href="#client_main.ClientTransport" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="database-client-py">
+<h2>database_client.py<a class="headerlink" href="#database-client-py" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="database_client.ClientDB">
+<em class="property">class </em><code class="sig-prename descclassname">database_client.</code><code class="sig-name descname">ClientDB</code><span class="sig-paren">(</span><em class="sig-param">login</em><span class="sig-paren">)</span><a class="headerlink" href="#database_client.ClientDB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create tables in database. Interacts with the database of this client</p>
+<dl class="class">
+<dt id="database_client.ClientDB.Contacts">
+<em class="property">class </em><code class="sig-name descname">Contacts</code><span class="sig-paren">(</span><em class="sig-param">contact</em><span class="sig-paren">)</span><a class="headerlink" href="#database_client.ClientDB.Contacts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="database_client.ClientDB.HistoryMessages">
+<em class="property">class </em><code class="sig-name descname">HistoryMessages</code><span class="sig-paren">(</span><em class="sig-param">contact</em>, <em class="sig-param">direction</em>, <em class="sig-param">message</em>, <em class="sig-param">date</em><span class="sig-paren">)</span><a class="headerlink" href="#database_client.ClientDB.HistoryMessages" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="database_client.ClientDB.UsersKnown">
+<em class="property">class </em><code class="sig-name descname">UsersKnown</code><span class="sig-paren">(</span><em class="sig-param">login</em><span class="sig-paren">)</span><a class="headerlink" href="#database_client.ClientDB.UsersKnown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="encrypt-decrypt-py">
+<h2>encrypt_decrypt.py<a class="headerlink" href="#encrypt-decrypt-py" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="encrypt_decrypt.EncryptDecrypt">
+<em class="property">class </em><code class="sig-prename descclassname">encrypt_decrypt.</code><code class="sig-name descname">EncryptDecrypt</code><span class="sig-paren">(</span><em class="sig-param">user_login</em><span class="sig-paren">)</span><a class="headerlink" href="#encrypt_decrypt.EncryptDecrypt" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class creates keys, encodes and decodes messages</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Mega Messenger</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Client module documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#client-main-py">client_main.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#database-client-py">database_client.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#encrypt-decrypt-py">encrypt_decrypt.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="common.html">Common package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logs.html">Logs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_client.html">Gui client module documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Mega Messenger’s documentation!</a></li>
+      <li>Next: <a href="common.html" title="next chapter">Common package</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Maria Afanaseva.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/client.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
